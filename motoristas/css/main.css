@@ -1,0 +1,122 @@
+.disenos{
+    
+    width:100%;
+    padding-bottom: 20px;
+    background-color:#DDDDDD;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+.boton{
+    border-radius: 10px;
+    background-color: #F5A962;
+}
+.boton2{
+    border-radius: 10px;
+    background: linear-gradient(to  right, #125D98, #1EAE98);
+    width: 140px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 5px 5px 4px  #00000081;
+}
+
+.barra{
+    background-color: #125D98 !important;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    color: #fff;
+    box-shadow: 0px 4px 4px  rgba(0, 0, 0, 0.356);
+}
+.contenedor{
+    border-color: #1EAE98;
+    border-width: thin;
+    
+    padding-left: 10px;
+    padding-right: 10px;
+    border-style: solid;
+    border-radius: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.imput{
+    border-radius: 7px;
+    height: 50px;
+    border-color: #1EAE98;
+}
+.c1{
+    background-color: #125D98 !important;
+}
+.c2{
+    background-color: #1eae9891;
+}
+.c3{
+    color: #FFA754;
+}
+.c4{
+    color: white;
+}
+.c5{
+    background-color: #DDDDDD;
+}
+
+.conte_texto{
+    text-align: center;
+    width: 100%;
+}
+.flex_container{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    text-align: center;
+}
+.flex_container2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.tamano{
+    width: 100%;
+}
+.tamano2{
+    width: 90%;
+}
+.contenedor2{
+    border-radius: 0px 20px 0px 20px;
+    width: max-content;
+    padding: 5px 20px 5px 20px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.contenedor3{
+    border-radius: 0 80px 0 80px;
+    padding: 10px;
+}
+.borde{
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+}
+
+.base{
+    border-radius: 0 30px 0 0;
+    height: 80px;
+}
+.relleno_simple{
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+}
+
+.relleno_simple2{
+    margin-left: auto; 
+    width:min-content;
+    background-color: rgba(0, 0, 0, 0.637);
+    border-radius: 10px;
+}
+.sin_borde{
+    border-radius: 0;
+}
+

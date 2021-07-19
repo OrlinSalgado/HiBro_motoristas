@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HiBro Motoristas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body id="cuerpo">
+<div class="disenos" id="contPrincipal">
+  <nav class="navbar navbar-light bg-light barra">
+    <div class="container">
+      <a class="navbar-brand" >
+        <div class="flex_container c4">
+          <img src="img/logo.png" alt="" width="100px">
+          <h4>HiBro!</h4>
+        </div>
+      </a>
+      <button class="btn btn-secondary boton " type="button" onclick="registrarse()" id="btnRegistro">registrarse</button>
+    </div>
+  </nav>
+  <div id="contenido" style="display: block;">
+    <div class=" conte_texto my-3">
+      <h2 class="c3">Bienvenido</h2>
+      <b><p>Lo que necesites te lo llevamos, de forma rapida y segura, que esperas, ordena ya.</p></b>
+    </div>
+  
+    <div class="contenedor2 c4 my-3  c2">
+      <h3>Iniciar sesión</h3>
+    </div>
+  
+    <div class="disenos">
+      <div class="container">
+        <div class="row" >
+          <div class="col-11  col-sm-10 col-md-8 col-lg-6 col-xl-5 contenedor">
+            <input type="text" class="form-control my-4 imput" placeholder="usuario o correo electronico">
+            <input type="password" class="form-control my-4 imput" placeholder="contraseña">
+            <div class="flex_container2 tamano"><button type="button" class="btn btn-secondary boton2 my-4 " onclick="ordenes()">Entrar</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="contenidoRegistrar" style="display: none;">
+    <div class="tamano flex_container2 my-3"><h1 class="c3 mx-4">Bienvenido futuro repartidor</h1></div>
+    <div class="row flex_container2 ">
+      <img src="img/bienvenido.png" width="100%" class=" col-12 col-sm-6 col-xl-6 col-md-6">
+    </div>
+    <div class="tamano flex_container2">
+      <p class="mx-3">Para unirte a nuestros motoristas llene los campos y luego que los abministradores lo acepten podra laborar con nosotros. para mas informacion siga el siguiente enlace:
+      </p>
+    </div>
+    <div class="tamano flex_container2">
+      <a class="c5 relleno_simple" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmeme.fandom.com%2Fes%2Fwiki%2FMucho_texto&psig=AOvVaw10mLDM5dXyMZ6q43nVS5K_&ust=1626133820046000&source=images&cd=vfe&ved=2ahUKEwjVuvDWmtzxAhUN61MKHR5CAjkQr4kDegUIARCoAQ">Informacion</a>
+    </div>
+  </div>
+  <div id="bienvenidoMotorista" style="display: none;" class="row">
+    <div  style=" background-image: url(img/moto3.jpg);  height: 220px; padding: 20px;" class="col-12 col-md-6 col-sm-7 col-lg-5 col-xl-3 flex_container2">
+      <div class="flex_container2 c3 relleno_simple2 "><h2 style="padding: 10px;">Bienvenido Juan</h2></div>
+    </div>
+  </div>
+  
+ 
+  
+</div>
+ <div id="contenido2" class="tamano flex_container2">
+    <img src="img/moto.png" >
+ </div>
+ <div id="contenidoRegistrar2" style="display: none;" class="row">
+  <div class="col-12 flex_container2"><h2 class="contenedor2 c4 my-3  c2">Datos personales: </h2></div>
+    <div class="col-12 col-sm-6 col-xl-6 col-md-6 c5 contenedor3">
+      <div style="padding: 20px; border-radius: 10px;">
+        <form class="tamano contenedor" >
+          <input type="text" class="form-control my-3 imput" placeholder="nombres">
+          <input type="text" class="form-control my-3 imput" placeholder="apellidos">
+          <input type="number" min="15" max="60" class="form-control my-2 imput" placeholder="edad">
+          <input type="email" class="form-control my-3 imput" placeholder="correo electronico">
+          <input type="text" class="form-control my-3 imput" placeholder="direccion donde vive" >
+          <div class="flex_container2 tamano"><button type="button" class="btn btn-secondary boton2 my-4 ">Registrarse</button></div>
+          
+        </form>
+      </div>
+    </div>
+ </div>
+ <div id="opcionesOrdenes">
+
+ </div>
+ <div id="base" class="tamano" style="margin-top: 20px;">
+    <div class="c5 base tamano2">
+
+    </div>
+ </div>
+  
+  
+      
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <script src="js/controlador.js"></script>
+</body>
+</html>
