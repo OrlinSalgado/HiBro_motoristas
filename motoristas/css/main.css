@@ -1,3 +1,6 @@
+#cuerpo{
+    background: linear-gradient(to  right, #76259f,#5d0cff5e, #6a1193);
+}
 .disenos{
     
     width:100%;
@@ -8,11 +11,12 @@
 }
 .boton{
     border-radius: 10px;
-    background-color: #F5A962;
+    background: linear-gradient(to  right, #125D98, #1EAE98);
+    box-shadow: 4px 4px 3px  #00000081;
 }
 .boton2{
     border-radius: 10px;
-    background: linear-gradient(to  right, #125D98, #1EAE98);
+    background: linear-gradient(to  right, #125D98, #541274);
     width: 140px;
     margin-left: auto;
     margin-right: auto;
@@ -20,19 +24,18 @@
 }
 
 .barra{
-    background-color: #125D98 !important;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+    background-color: #5312748c!important;
+    
     color: #fff;
-    box-shadow: 0px 4px 4px  rgba(0, 0, 0, 0.356);
+    
 }
 .contenedor{
-    border-color: #1EAE98;
-    border-width: thin;
+   
+   
     
     padding-left: 10px;
     padding-right: 10px;
-    border-style: solid;
+    
     border-radius: 25px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -41,7 +44,7 @@
     
 }
 .imput{
-    border-radius: 7px;
+    border-radius: 20px;
     height: 50px;
     border-color: #1EAE98;
 }
@@ -49,7 +52,7 @@
     background-color: #125D98 !important;
 }
 .c2{
-    background-color: #1eae9891;
+    background-color: #531274b4;
 }
 .c3{
     color: #FFA754;
@@ -59,6 +62,9 @@
 }
 .c5{
     background-color: #DDDDDD;
+}
+.c6{
+    background-color: #5312748a;
 }
 
 .conte_texto{
@@ -102,7 +108,7 @@
 }
 
 .base{
-    border-radius: 0 30px 0 0;
+   
     height: 80px;
 }
 .relleno_simple{
