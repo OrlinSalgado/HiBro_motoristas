@@ -9,19 +9,21 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body id="cuerpo">
+  
 <div class="" id="contPrincipal">
+
   <nav class="navbar navbar-light bg-light barra">
-    <div class="container">
+    <div class="container tamano">
       <a class="navbar-brand" >
-        <div class="flex_container c4">
-          <img src="img/logo.png" alt="" width="100px">
+        <div class="flex_container tamano c4" id="navegacion" >
+          <img src="img/logo.png" alt="" width="100px" id="imagenLogo">
           <h4>HiBro!</h4>
         </div>
       </a>
       <button class="btn btn-secondary boton " type="button" onclick="registrarse()" id="btnRegistro">registrarse</button>
     </div>
   </nav>
-  <div id="contenido" style="display: block;"></div>
+  <div id="contenido" style="display: block;">
    
   
     <div class="contenedor2 c4 my-5  c2">
@@ -41,7 +43,7 @@
     </div>
   </div>
   <div id="contenidoRegistrar" style="display: none;">
-    <div class="tamano flex_container2 my-3"><h1 class="c3 mx-4">Bienvenido futuro repartidor</h1></div>
+    <div class="tamano flex_container2 my-3"><h1 class="c8 mx-4">Bienvenido futuro repartidor</h1></div>
     <div class="row flex_container2 ">
       <img src="img/bienvenido.png" width="100%" class=" col-12 col-sm-6 col-xl-6 col-md-6">
     </div>
@@ -50,12 +52,41 @@
       </p>
     </div>
     <div class="tamano flex_container2">
-      <a class="c5 relleno_simple" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmeme.fandom.com%2Fes%2Fwiki%2FMucho_texto&psig=AOvVaw10mLDM5dXyMZ6q43nVS5K_&ust=1626133820046000&source=images&cd=vfe&ved=2ahUKEwjVuvDWmtzxAhUN61MKHR5CAjkQr4kDegUIARCoAQ">Informacion</a>
+      <a class="c2 c7 relleno_simple" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmeme.fandom.com%2Fes%2Fwiki%2FMucho_texto&psig=AOvVaw10mLDM5dXyMZ6q43nVS5K_&ust=1626133820046000&source=images&cd=vfe&ved=2ahUKEwjVuvDWmtzxAhUN61MKHR5CAjkQr4kDegUIARCoAQ"><h6>Informacion</h6> </a>
     </div>
   </div>
-  <div id="bienvenidoMotorista" style="display: none;" class="row">
-    <div  style=" background-image: url(img/moto3.jpg);  height: 220px; padding: 20px;" class="col-12 col-md-6 col-sm-7 col-lg-5 col-xl-3 flex_container2">
-      <div class="flex_container2 c3 relleno_simple2 "><h2 style="padding: 10px;">Bienvenido Juan</h2></div>
+  <div id="bienvenidoMotorista" style="display: none;" class="row my-3">
+    <div  class="col-10 col-md-8 col-sm-10 col-lg-6 col-xl-5 c2 mx-auto flex_container2" style="border-radius: 10px; height: 60px;">
+      <div class="flex_container2 c8 "><h2 style="padding: 10px;">Bienvenido Juan</h2></div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="info_orden flex_container2 c6" style=" left: 80px; top: 20px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor"onclick="tomarOrden()" style="padding-left:40px;"><h3>Tomar Nueva Orden</h3></div>
+        </div>
+        <div class="circulo c6 flex_container2" style="bottom: 70px;"> 
+          <img src="img/tomar.png" class="circulo2 cursor" onclick="tomarOrden()">
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        <div class="info_orden flex_container2 c6" style=" left: 40px; bottom: 40px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor" onclick="ordenesTomadas();"><h3 style="margin-right: 60px;">Ordenes Tomadas</h3></div>
+        </div>
+        <div class="circulo c6 flex_container2" style="bottom: 130px; left: 240px;"> 
+          <img src="img/tomadas.jpg" class="circulo2 cursor" onclick="ordenesTomadas();">
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="info_orden flex_container2 c6" style=" left: 80px; bottom: 100px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor" style="padding-left:40px;" onclick="ordenesEntregadas();"><h3>Ordenes Entregadas</h3></div>
+        </div>
+        <div class="circulo c6 flex_container2" style="bottom: 190px;"> 
+          <img src="img/entregadas.jpg" class="circulo2 cursor" onclick="ordenesEntregadas()">
+        </div>
+      </div>
+      
     </div>
   </div>
   
@@ -67,10 +98,10 @@
  </div>
  <div id="contenidoRegistrar2" style="display: none;" class="row">
   <div class="col-12 flex_container2"><h2 class="contenedor2 c4 my-3  c2">Datos personales: </h2></div>
-    <div class="col-12 col-sm-6 col-xl-6 col-md-6 c5 contenedor3">
-      <div style="padding: 20px; border-radius: 10px;">
-        <form class="tamano contenedor" >
-          <input type="text" class="form-control my-3 imput" placeholder="nombres">
+    <div class="col-12 col-sm-6 col-xl-6 col-md-6  contenedor3 mx-auto">
+      <div style="padding: 20px; " class="tamano">
+        <form class="tamano contenedor c6 mx-auto" >
+          <input type="text" class="form-control my-3  imput" placeholder="nombres">
           <input type="text" class="form-control my-3 imput" placeholder="apellidos">
           <input type="number" min="15" max="60" class="form-control my-2 imput" placeholder="edad">
           <input type="email" class="form-control my-3 imput" placeholder="correo electronico">
