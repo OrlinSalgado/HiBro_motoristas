@@ -60,7 +60,7 @@
       <div class="flex_container2 c8 "><h2 style="padding: 10px;">Bienvenido Juan</h2></div>
     </div>
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
         <div class="info_orden flex_container2 c6" style=" left: 80px; top: 20px;">
           <div class="info_orden2 c9 flex_container2 c7 cursor"onclick="tomarOrden()" style="padding-left:40px;"><h3>Tomar Nueva Orden</h3></div>
         </div>
@@ -69,21 +69,21 @@
         </div>
       </div>
 
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
         <div class="info_orden flex_container2 c6" style=" left: 40px; bottom: 40px;">
-          <div class="info_orden2 c9 flex_container2 c7 cursor" onclick="ordenesTomadas();"><h3 style="margin-right: 60px;">Ordenes Tomadas</h3></div>
+          <div class="info_orden2 c9 flex_container2 c7 cursor" onclick="ordenTomada();"><h3 style="margin-right: 60px;">Ordenes Tomadas</h3></div>
         </div>
         <div class="circulo c6 flex_container2" style="bottom: 130px; left: 240px;"> 
-          <img src="img/tomadas.jpg" class="circulo2 cursor" onclick="ordenesTomadas();">
+          <img src="img/tomadas.jpg" class="circulo2 cursor" onclick="ordenTomada();">
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
         <div class="info_orden flex_container2 c6" style=" left: 80px; bottom: 100px;">
-          <div class="info_orden2 c9 flex_container2 c7 cursor" style="padding-left:40px;" onclick="ordenesEntregadas();"><h3>Ordenes Entregadas</h3></div>
+          <div class="info_orden2 c9 flex_container2 c7 cursor" style="padding-left:40px;" onclick="ordenEntregada();"><h3>Ordenes Entregadas</h3></div>
         </div>
         <div class="circulo c6 flex_container2" style="bottom: 190px;"> 
-          <img src="img/entregadas.jpg" class="circulo2 cursor" onclick="ordenesEntregadas()">
+          <img src="img/entregadas.jpg" class="circulo2 cursor" onclick="ordenEntregada()">
         </div>
       </div>
       
@@ -112,9 +112,18 @@
       </div>
     </div>
  </div>
- <div id="opcionesOrdenes">
-
+ <div id="ordenesPorTomar" class="row" style="display: none;">
+   
  </div>
+ <div id="ordenesTomadas" class="row">
+
+</div>
+<div id="ordenesEntregadas" class="row" style="display: none;">
+  <div class="form col-10 mx-auto my-3 c6" style="padding:10px; ">
+    <div class="c6 my-2" style="padding:5px 20px 5px 20px; width:min-content; color: white;"><h6>Desde:</h6></div>
+    <div class="tamano flex_container2"><select name="tiempo" id="tiempoEntregadas" class="  imput2 "></select></div>
+  </div>
+</div>
  <div id="base" class="tamano" style="margin-top: 20px;">
     <div class="c5 tamano base c6">
 
