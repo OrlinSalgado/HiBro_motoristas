@@ -4,13 +4,16 @@ var ordenesSinTomar=[
         ubicacion: 'colonia kenedi etc',
         metodoPago: 'tarjeta Credito',
         codigo: 'WTF_234',
+        fecha: '12/10/2021',
+        estadoOrden: 'portomar',
         pedidos:[
             {
                 empresa: 'kielsa',
                 nombreProducto: 'pizza peperoni',
                 descripcion: 'pizza grande de peperoni',
                 cantidad: 2 ,
-                precioProducto: 10
+                precioProducto: 10,
+                isv: 0.3
                 
             },
             {
@@ -18,8 +21,8 @@ var ordenesSinTomar=[
                 nombreProducto: 'amburgesa triple',
                 descripcion: 'amburgesa triple de queso',
                 cantidad: 3 ,
-                precioProducto: 15
-                
+                precioProducto: 15,
+                isv: 0.3
             }
           
         ],
@@ -29,13 +32,16 @@ var ordenesSinTomar=[
         ubicacion: 'colonia 21 de octubre etc',
         metodoPago: 'efectivo',
         codigo: 'WPF_214',
+        fecha: '12/10/2021',
+        estadoOrden: 'portomar',
         pedidos:[
             {
                 empresa: 'macdonal',
                 nombreProducto: 'combo familiar',
                 descripcion: 'combo familiar de amburgesa y papas',
                 cantidad: 1 ,
-                precioProducto: 10
+                precioProducto: 10,
+                isv: 0.3
                 
             },
             {
@@ -43,7 +49,8 @@ var ordenesSinTomar=[
                 nombreProducto: 'combo de pollo',
                 descripcion: 'combo familiar de pollo',
                 cantidad: 2 ,
-                precioProducto: 20
+                precioProducto: 20,
+                isv: 0.3
                 
             }
           
@@ -58,13 +65,22 @@ var ordenesTomadas=[
         ubicacion: 'colonia kenedi etc',
         metodoPago: 'tarjeta Credito',
         codigo: 'WTF_234',
+        fecha: '12/10/2021',
+        estadoOrden: 'tomada',
+        estadoEntrega: 'sinTomar',
+       
+        estados: [
+           'tomada', 'en camino','en el origen', 'en el destino','entregada'
+        ],
+        
         pedidos:[
             {
                 empresa: 'kielsa',
                 nombreProducto: 'pizza peperoni',
                 descripcion: 'pizza grande de peperoni',
                 cantidad: 2 ,
-                precioProducto: 10
+                precioProducto: 10,
+                isv: 0.3
                 
             },
             {
@@ -72,7 +88,8 @@ var ordenesTomadas=[
                 nombreProducto: 'amburgesa triple',
                 descripcion: 'amburgesa triple de queso',
                 cantidad: 3 ,
-                precioProducto: 15
+                precioProducto: 15,
+                isv: 0.3
                 
             }
           
@@ -83,13 +100,20 @@ var ordenesTomadas=[
         ubicacion: 'colonia 30 de mayo etc',
         metodoPago: 'tarjeta Credito',
         codigo: 'WPF_214',
+        fecha: '12/10/2021',
+        estadoOrden: 'tomada',
+        estadoEntrega: 'sinTomar',
+        estados: [
+            'tomada', 'en camino','en el origen', 'en el destino','entregada'
+         ],
         pedidos:[
             {
                 empresa: 'macdonal',
                 nombreProducto: 'combo familiar',
                 descripcion: 'combo familiar de amburgesa y papas',
                 cantidad: 1 ,
-                precioProducto: 10
+                precioProducto: 10,
+                isv: 0.3
                 
             },
             {
@@ -97,7 +121,8 @@ var ordenesTomadas=[
                 nombreProducto: 'combo de pollo',
                 descripcion: 'combo familiar de pollo',
                 cantidad: 2 ,
-                precioProducto: 20
+                precioProducto: 20,
+                isv: 0.3
                 
             }
           
@@ -111,13 +136,17 @@ var ordenesEntregadas=[
         ubicacion: 'colonia kenedi etc',
         metodoPago: 'tarjeta Credito',
         codigo: 'WTF_234',
+        fecha: '12/10/2021',
+        estadoOrden: 'entregada',
+       
         pedidos:[
             {
                 empresa: 'kielsa',
                 nombreProducto: 'pizza peperoni',
                 descripcion: 'pizza grande de peperoni',
                 cantidad: 2 ,
-                precioProducto: 10
+                precioProducto: 10,
+                isv: 0.3
                 
             },
             {
@@ -125,7 +154,8 @@ var ordenesEntregadas=[
                 nombreProducto: 'amburgesa triple',
                 descripcion: 'amburgesa triple de queso',
                 cantidad: 3 ,
-                precioProducto: 15
+                precioProducto: 15,
+                isv: 0.3
                 
             }
           
@@ -136,13 +166,16 @@ var ordenesEntregadas=[
         ubicacion: 'colonia 30 de mayo etc',
         metodoPago: 'tarjeta Credito',
         codigo: 'WPF_214',
+        fecha: '12/10/2021',
+        estadoOrden: 'entregada',
         pedidos:[
             {
                 empresa: 'macdonal',
                 nombreProducto: 'combo familiar',
                 descripcion: 'combo familiar de amburgesa y papas',
                 cantidad: 1 ,
-                precioProducto: 10
+                precioProducto: 10,
+                isv: 0.3
                 
             },
             {
@@ -150,7 +183,8 @@ var ordenesEntregadas=[
                 nombreProducto: 'combo de pollo',
                 descripcion: 'combo familiar de pollo',
                 cantidad: 2 ,
-                precioProducto: 20
+                precioProducto: 20,
+                isv: 0.3
                 
             }
           
@@ -158,7 +192,30 @@ var ordenesEntregadas=[
     },
 ];
 
+var facturas = [
+    
+    {
+        repartidor:'',
+        cliente: '',
+        fehaEntrega: '',
+        horaEntrega: '',
+        
+        isvTotal: '',
+        comisionMotorista: '',
+        comisionAdminidtracion: '',
+        totalComision: '',
+        totalPagar: '',
+        pedidos:[
+            {
+                nombreProducto: '',
+                precioProducto: '',
+            }
+        ]
 
+    }
+        
+    
+];
 
 function registrarse(){
     console.log("registrarse");
@@ -187,14 +244,14 @@ function ordenes(){
     
 }
 function tomarOrden(){
-    document.getElementById('cuerpo').style.background='linear-gradient(to  right, #74209be8,#d0b6dacc,#74209be8)';
+    document.getElementById('cuerpo').style.background='linear-gradient(to  right, #76259f,#5d0cff5e, #6a1193)';
     console.log('tomar orden');
     document.getElementById('bienvenidoMotorista').style.display= "none";
-    document.getElementById('base').style.display= "none";
+   // document.getElementById('base').style.display= "none";
     document.getElementById('ordenesPorTomar').style.display= "block";
     ordenesSinTomar.forEach(function(sinTomar, i){
         document.getElementById('ordenesPorTomar').innerHTML += `
-        <div class="col-11 mx-auto my-2 c6 row flex_container" style="text-align: left; border-radius: 20px;">
+        <div class="col-11 mx-auto my-2 c6 row flex_container" style="text-align: left; border-radius: 20px;" onclick="mostrarDetalle(${i},'${sinTomar.estadoOrden}');" data-bs-toggle="modal" data-bs-target="#detalleModal">
         <img src="img/libro1.png" style="width: 100px;">
         <div class="info_orden3  col-8" style="color: #ffffff;" >
           <p><b>cliente: </b> ${sinTomar.cliente}<br><b>codigo: </b>${sinTomar.codigo}</p>
@@ -204,20 +261,25 @@ function tomarOrden(){
     });
 }
 function ordenTomada(){
+    document.getElementById('cuerpo').style.background='linear-gradient(to bottom right, #541274, white)';
     console.log('ordenes tomadas');
-    document.getElementById('base').style.display= "none";
+   // document.getElementById('base').style.display= "none";
     document.getElementById('ordenesPorTomar').style.display= "none";
     document.getElementById('bienvenidoMotorista').style.display= "none";
     document.getElementById('ordenesTomadas').style.display= "block";
     ordenesTomadas.forEach(function(tomadas, i){
         document.getElementById('ordenesTomadas').innerHTML += `
-        <div class="col-11 mx-auto my-4  row flex_container" style="text-align: left; border-radius: 20px;  ">
+        <div class="col-11 mx-auto my-4  row flex_container cursor" style="text-align: left; border-radius: 20px;"  onclick="mostrarEstado(${i}, '${tomadas.estadoOrden}');" >
         <div class="info_orden3 my-2 mx-auto col-12 row" style="color: #ffffff; " >
           <div class="col-3 flex_container"><img src="img/libro2.png" style="width: 100px; position: absolute; ;left: 0px;"></div>
             <div class="col-8 flex_container">
               <p><b>cliente: </b> ${tomadas.cliente}
               <br><b>codigo: </b>${tomadas.codigo}</p>
             </div>
+            <div class="row my-4">
+                 <div  id= "mostrarEstado${i}" style="display: none;" class="flex-container2 col-12"></div>
+            </div>
+            
          
         </div>  
     </div>
@@ -227,20 +289,159 @@ function ordenTomada(){
 }
 
 function ordenEntregada(){
+    document.getElementById('cuerpo').style.background='linear-gradient(to  left, #6A1193,#ffffff)';
     console.log('ordenes entregadas');
     document.getElementById('bienvenidoMotorista').style.display= "none";
-    document.getElementById('base').style.display= "none";
+    //document.getElementById('base').style.display= "none";
     document.getElementById('ordenesPorTomar').style.display= "none";
     document.getElementById('ordenesTomadas').style.display= "none";
     document.getElementById('ordenesEntregadas').style.display= "block";
 
-    ordenesEntregadas.forEach(function(tomadas, i){
+    ordenesEntregadas.forEach(function(entregadas, i){
         document.getElementById('ordenesEntregadas').innerHTML += `
-        <div class="col-8 mx-auto my-2 c6 row flex_container" style="text-align: left;">
+        <div class="col-8 mx-auto my-2 c6 row flex_container" style="text-align: left;" onclick="mostrarDetalle(${i},'${entregadas.estadoOrden}');" data-bs-toggle="modal" data-bs-target="#detalleModal">
         <img src="img/libro3.png" style="width: 70px;">
         <div class="  col-8" style="color: white;" >
-          <p style="font-size: 12px;"><b>cliente: </b> ${tomadas.cliente}<br><b>codigo: </b>${tomadas.codigo}</p>
+          <p style="font-size: 12px;"><b>cliente: </b> ${entregadas.cliente}<br><b>codigo: </b>${entregadas.codigo}</p>
         </div>  
     </div>
     <hr style="color: #531274;"> `;});
+}
+
+function mostrarDetalle(indice, estado){
+    console.log(indice,estado)
+   let orden='';
+    if (estado==='tomada') {
+        orden= ordenesTomadas[indice];
+        document.getElementById('modalCabecera').innerHTML =`
+         <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        `;
+    }
+    else if (estado==='portomar') {
+        orden= ordenesSinTomar[indice];
+        document.getElementById('modalCabecera').innerHTML =`
+         <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
+        <button type="button " class="btn btn-secondary boton2" onclick="guardarOrden();">Tomar Orden</button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        `;
+    }
+    else{
+        orden= ordenesEntregadas[indice];
+        document.getElementById('modalCabecera').innerHTML =`
+         <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        `;
+    }
+    console.log('mostrar detalle' ,indice);
+    document.getElementById('modalFondo').style.background ='linear-gradient(to bottom left, #541274, #9a79f4)';
+    let pedidos='';
+    for (let i = 0; i < orden.pedidos.length; i++) {
+      pedidos +=`<p>
+      <b>#${i+1}</b><br>
+      <b>Empresa: </b>${orden.pedidos[i].empresa}<br>
+      <b>Producto: </b>${orden.pedidos[i].nombreProducto}<br>
+      <b>Descripcion: </b>${orden.pedidos[i].descripcion}<br>
+      <b>Cantidad: </b>${orden.pedidos[i].cantidad}<br>
+      <b>precio: </b>${orden.pedidos[i].precioProducto} $</p>`;  
+        
+    }
+
+    document.getElementById('modalContenido').innerHTML =`
+    <div class= "tamano2 c9 mx-auto contenedor"><p>
+    <b>cliente: </b>${orden.cliente}<br>
+    <b>Ubicacion: </b>${orden.ubicacion}<br>
+    <b>Metodo de pago: </b>${orden.metodoPago}<br>
+    <b>Fecha: </b>${orden.fecha}<br></p>
+    <hr>
+    <b>pedidos: </b>
+    <hr>
+    <div>${pedidos}</div>
+    </div>`;
+}
+function mostrarEstado(indice, estado){
+   let mostrar = document.getElementById(`mostrarEstado${indice}`).style.display;
+    if (mostrar==='none') {
+        document.getElementById(`mostrarEstado${indice}`).style.display= 'block';
+    }
+    else{
+        document.getElementById(`mostrarEstado${indice}`).style.display= 'none'; 
+    }
+    document.getElementById(`mostrarEstado${indice}`).innerHTML =``;
+    document.getElementById(`mostrarEstado${indice}`).innerHTML =`
+        <button type="button" class="btn btn-secondary boton  my-1 " onclick="mostrarDetalle(${indice},'${estado}');" data-bs-toggle="modal" data-bs-target="#detalleModal">Ver orden</button>
+        <h6 class="c7">Estado: </h6>`;
+        
+    ordenesTomadas[indice].estados.forEach(function(actual,i){
+        let opcion='';
+        if (actual==='entregada') {
+            opcion='data-bs-toggle="modal" data-bs-target="#detalleModal"';
+        }
+        document.getElementById(`mostrarEstado${indice}`).innerHTML +=`
+        <button type="button" class="btn btn-secondary bt bt${i+1} my-1 mx-1" onclick="eliminarEstado(${indice},${i});" ${opcion}>${actual}</button>`;
+    });
+    
+}
+function eliminarEstado(indice,i){
+    console.log('eliminar boton',i);
+    ordenesTomadas[indice].estadoEntrega=`${ordenesTomadas[indice].estados[i]}`;
+    if ( ordenesTomadas[indice].estadoEntrega==='entregada') {
+        mostrarFactura(indice);
+    }else{
+        ordenesTomadas[indice].estados.splice(i, 1,);
+    }
+   
+    
+}
+
+function mostrarFactura(indice) {
+    console.log('mostrar factura',indice);
+    document.getElementById('modalFondo').style.background ='linear-gradient(to bottom left, #541274, #9a79f4)';
+    document.getElementById('modalCabecera').innerHTML =`
+    <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+   `;
+   document.getElementById('modalPie').innerHTML=`
+   <button type="button " class="btn btn-secondary boton3" onclick="finalizarOrden(${indice});">Finalizar pedido</button>
+   <button type="button " class="btn btn-secondary boton3" onclick="borrarOrden(${indice});">orden cancelada</button>
+   <button type="button" class="btn btn-secondary boton" data-bs-dismiss="modal">salir</button>
+   `;
+    let hoy = new Date();
+    let fecha = hoy.getDate() + '-' + (hoy.getMonth()+1) + '-' + hoy.getFullYear();
+    let hora = hoy.getHours()+ '-' + hoy.getMinutes() + '-' + hoy.getSeconds();
+    let isvTotal=0;
+    let comisionMotorista= 2;
+    let comisionAdminidtracion= 1;
+    let subtotal=0;
+    let totalComision= comisionMotorista + comisionAdminidtracion;
+    let   totalPagar=0;
+    let orden = ordenesTomadas[indice];
+    let detalle='';
+    for (let i = 0; i < orden.pedidos.length; i++) {
+        detalle += `<div class="flex_container4 tamano">
+            <div style="width: max-content;">${orden.pedidos[i].nombreProducto}</div>
+            <div style="width: max-content;">${orden.pedidos[i].precioProducto} $</div>
+        </div>`;
+        isvTotal = isvTotal+ orden.pedidos[i].isv;
+        subtotal = subtotal + (orden.pedidos[i].precioProducto * orden.pedidos[i].cantidad)
+    }
+    totalPagar = subtotal + isvTotal + totalComision;
+   
+    document.getElementById('modalContenido').innerHTML =`
+   <div class="my-2 c4 mx-auto relleno_simple2"><div class="mx-4 my-3">repartidor: Juan Rodriguez</div></div>
+   <div class= "tamano2 c9 mx-auto contenedor">
+   
+   <p><b>cliente: </b>${orden.cliente}<br>
+   <b>Metodo de pago: </b>${orden.metodoPago}<br>
+   <b>Fecha: </b>${fecha} <b>hora: </b>${hora}</p>
+   <hr>
+   <div class="flex-container2 tamano"><div class="mx-auto" style="width: max-content;"><b>Detalle de compra</b></div></div>
+   ${detalle}<hr>
+   <p>
+   <b>comision motorista: </b>${comisionMotorista} $<br>
+   <b>comision administracion: </b>${comisionAdminidtracion} $<br>
+   <b>total comision : </b>${totalComision} $</p>
+   <hr>
+   <h6><b>total a pagar: </b> ${totalPagar} $</h6>
+   </div>`;
 }

@@ -1,5 +1,6 @@
 #cuerpo{
-    background: linear-gradient(to  right, #76259f,#5d0cff5e, #6a1193);
+    
+   background: linear-gradient(to  bottom, #9a79f4,#d0b6dacc, #ffffff);
  
 }
 .disenos{
@@ -22,6 +23,34 @@
     margin-left: auto;
     margin-right: auto;
     box-shadow: 5px 5px 4px  #00000081;
+}
+.boton3{
+    border-radius: 10px;
+    background: linear-gradient(to  right, #125D98, #541274);
+    
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 5px 5px 4px  #00000081;  
+}
+.bt{
+    border-radius: 10px;
+   
+   
+}
+.bt1{
+    background: linear-gradient(to  right, #2578B9, #23ad8a);
+}
+.bt2{
+    background: linear-gradient(to  right, #1e75b8, #18ad88);
+}
+.bt3{
+    background: linear-gradient(to  right, #1270b8, #07b98d);
+}
+.bt4{
+    background: linear-gradient(to  right, #1EAE98, #1eae72);
+}
+.bt5{
+    background: linear-gradient(to  right, #13b39b, #0fb16d);
 }
 
 .barra{
@@ -107,6 +136,12 @@
     justify-content: right;
     text-align: center;
 }
+.flex_container4{
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+    text-align: left;
+}
 .tamano{
     width: 100%;
 }
@@ -141,10 +176,11 @@
 }
 
 .relleno_simple2{
-    margin-left: auto; 
-    width:min-content;
+    
+    width:max-content;
     background-color: rgba(0, 0, 0, 0.637);
     border-radius: 10px;
+    
 }
 .sin_borde{
     border-radius: 0;
@@ -202,4 +238,14 @@
 }
 .cursor{
     cursor: pointer;
+}
+.linea{
+    border-top: 1px solid #692a88;
+}
+.linea2{
+    border-bottom: 1px solid #692a88;
+}
+.caja{
+    width: max-content;
+    padding: 2px 10px 2px 10px;
 }
