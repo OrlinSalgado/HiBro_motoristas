@@ -589,75 +589,8 @@ function mostrarFactura(indice) {
    </div>`;
 }
 
-function mostrarUbicacion(){
-    var latitude;
-    var longitude;
-    var dibujarMapa =document.getElementById('map');
-    if (navigator.geolocation) {
-        console.log('tu navegador soporta geolocalizacion')
-    }
-    else{
-        console.log('tu navegador no soporta geolocalizacion')
-    }
-    
-    function localizacion(posicion) {
-         latitude = posicion.coords.latitude;
-         longitude = posicion.coords.longitude;
-        var imgURL4 = " https://maps.googleapis.com/maps/api/staticmap?center="+latitude+","+longitude+"&size=600x300&markers=color:red%7C"+latitude+","+longitude+"&key=AIzaSyDt6YFVMylDuuYDjKKKbmgiHwYgDKFNs6E";
-        
-        
-        console.log("latitude: "+ latitude );
-        console.log("longitude: "+ longitude);
-        document.getElementById('map').innerHTML = `<img src="${imgURL4}">`
-        
-    }
-
-    function error() {
-        console.log('nos se pudo obtener tu localizacion')
-    }
-    navigator.geolocation.getCurrentPosition(localizacion, error);
-    
-    
-}
-
-function iniciarMapa(){
-    var coord = {lat:latitude ,lng: longitude};
-    var map = new google.maps.Map(document.getElementById('map'),{
-      zoom: 10,
-      center: coord
-    });
-    var marker = new google.maps.Marker({
-      position: coord,
-      map: map
-    });
-}
-
-var script = document.createElement('script');
-script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDt6YFVMylDuuYDjKKKbmgiHwYgDKFNs6E&callback=initMap';
-script.async = true;
 
 
-window.initMap = function crearMapaInteractivo(){
-    var divMapa = document.getElementById('map');
-    navigator.geolocation.getCurrentPosition(fn_ok, fn_mal)
-    function fn_mal() {
-        console.log('nos se pudo obtener tu localizacion');
-    }
-    function fn_ok(respuesta) {
-       var lat =  respuesta.coords.latitude;
-       var lon =  respuesta.coords.longitude;
-       var gLatLon = new google.maps.LatLng(lat, lon);
-       var objConfig = {
-            zoom: 17,
-            center: gLatLon
-       };
-       var gMapa = new google.maps.Map(divMapa, objConfig);
-
-
-    }
-};
-
-//document.head.appendChild(script);
 function crearMapa() {
     var divMapa = document.getElementById('map');
     navigator.geolocation.getCurrentPosition(fn_ok, fn_mal)
