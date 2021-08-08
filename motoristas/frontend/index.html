@@ -8,15 +8,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body id="cuerpo">
-  
+<body id="cuerpo" class="cuerpo-general fondo1">
+ 
 <div class="" id="contPrincipal">
 
-  <nav class="navbar navbar-light bg-light barra">
-    <div class="container tamano">
+  <nav class="navbar navbar-light bg-light barra" id="barraNav">
+    <div class="container tamano" id="navegacion" >
       <a class="navbar-brand" >
-        <div class="flex_container tamano c4" id="navegacion" >
-          <img src="img/logo.png" alt="" width="100px" id="imagenLogo">
+        <div class="flex_container tamano c4" >
+          <img src="img/logo.png" alt="" width="80px" id="imagenLogo">
           <h4>HiBro!</h4>
         </div>
       </a>
@@ -26,14 +26,14 @@
   <div id="contenido" style="display: block;">
    
   
-    <div class="contenedor2 c4 my-5  c2">
+    <div class="contenedor2 c4 my-5  c10">
       <h3 >Iniciar sesión</h3>
     </div>
   
     <div class="container">
       <div class="container"></div>
         <div class="row" >
-          <div class="col-11  col-sm-10 col-md-8 col-lg-6 col-xl-5 contenedor c2">
+          <div class="col-11  col-sm-10 col-md-8 col-lg-6 col-xl-5 contenedor c10">
             <input type="text" class="form-control my-4 imput" placeholder="usuario o correo electronico">
             <input type="password" class="form-control my-4 imput" placeholder="contraseña">
             <div class="flex_container2 tamano"><button type="button" class="btn btn-secondary boton2 my-4 " onclick="ordenes()">Entrar</button></div>
@@ -47,42 +47,42 @@
     <div class="row flex_container2 ">
       <img src="img/bienvenido.png" width="100%" class=" col-12 col-sm-6 col-xl-6 col-md-6">
     </div>
-    <div class="tamano flex_container2">
+    <div class="tamano flex_container2 c4">
       <p class="mx-3">Para unirte a nuestros motoristas llene los campos y luego que los abministradores lo acepten podra laborar con nosotros. para mas informacion siga el siguiente enlace:
       </p>
     </div>
     <div class="tamano flex_container2">
-      <a class="c2 c7 relleno_simple" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmeme.fandom.com%2Fes%2Fwiki%2FMucho_texto&psig=AOvVaw10mLDM5dXyMZ6q43nVS5K_&ust=1626133820046000&source=images&cd=vfe&ved=2ahUKEwjVuvDWmtzxAhUN61MKHR5CAjkQr4kDegUIARCoAQ"><h6>Informacion</h6> </a>
+      <a class="c10 c7 relleno_simple" href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmeme.fandom.com%2Fes%2Fwiki%2FMucho_texto&psig=AOvVaw10mLDM5dXyMZ6q43nVS5K_&ust=1626133820046000&source=images&cd=vfe&ved=2ahUKEwjVuvDWmtzxAhUN61MKHR5CAjkQr4kDegUIARCoAQ"><h6>Informacion</h6> </a>
     </div>
   </div>
   <div id="bienvenidoMotorista" style="display: none;" class="row my-3">
-    <div  class="col-10 col-md-8 col-sm-10 col-lg-6 col-xl-5 c2 mx-auto flex_container2" style="border-radius: 10px; height: 60px;">
+    <div  class="col-10 col-md-8 col-sm-10 col-lg-6 col-xl-5 c11 mx-auto flex_container2" style="border-radius: 10px; height: 60px;">
       <div class="flex_container2 c8 "><h2 style="padding: 10px;">Bienvenido Juan</h2></div>
     </div>
     <div class="row">
       <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
-        <div class="info_orden flex_container2 c6" style=" left: 80px; top: 20px;">
-          <div class="info_orden2 c9 flex_container2 c7 cursor"onclick="tomarOrden()" style="padding-left:40px;"><h3>Tomar Nueva Orden</h3></div>
+        <div class="info_orden flex_container2 c11 sombra1" style=" left: 80px; top: 20px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor"onclick="tomarOrden()" style="padding-left:40px;"><h5>Tomar Nueva Orden</h5></div>
         </div>
-        <div class="circulo c6 flex_container2" style="bottom: 70px;"> 
+        <div class="circulo c11 flex_container2 sombra1" style="bottom: 70px;"> 
           <img src="img/tomar.png" class="circulo2 cursor" onclick="tomarOrden()">
         </div>
       </div>
-
+      
       <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
-        <div class="info_orden flex_container2 c6" style=" left: 40px; bottom: 40px;">
-          <div class="info_orden2 c9 flex_container2 c7 cursor" onclick="ordenTomada();"><h3 style="margin-right: 60px;">Ordenes Tomadas</h3></div>
+        <div class="info_orden flex_container2 c11 sombra1" style=" left: 40px; bottom: 40px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor" onclick="ordenTomada();"><h5 style="margin-left: 70px;">Ordenes Tomadas</h5></div>
         </div>
-        <div class="circulo c6 flex_container2" style="bottom: 130px; left: 240px;"> 
+        <div class="circulo c11 flex_container2 sombra1" style="bottom: 130px; "> 
           <img src="img/tomadas.jpg" class="circulo2 cursor" onclick="ordenTomada();">
         </div>
       </div>
 
       <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
-        <div class="info_orden flex_container2 c6" style=" left: 80px; bottom: 100px;">
-          <div class="info_orden2 c9 flex_container2 c7 cursor" style="padding-left:40px;" onclick="ordenEntregada();"><h3>Ordenes Entregadas</h3></div>
+        <div class="info_orden flex_container2 c11 sombra1" style=" left: 80px; bottom: 100px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor" style="padding-left:40px;" onclick="ordenEntregada();"><h5>Ordenes Entregadas</h5></div>
         </div>
-        <div class="circulo c6 flex_container2" style="bottom: 190px;"> 
+        <div class="circulo c11 sombra1 flex_container2" style="bottom: 190px;"> 
           <img src="img/entregadas.jpg" class="circulo2 cursor" onclick="ordenEntregada()">
         </div>
       </div>
@@ -97,10 +97,10 @@
    
  </div>
  <div id="contenidoRegistrar2" style="display: none;" class="row">
-  <div class="col-12 flex_container2"><h2 class="contenedor2 c4 my-3  c2">Datos personales: </h2></div>
+  <div class="col-12 flex_container2"><h2 class="contenedor2 c4 my-3  c10">Datos personales: </h2></div>
     <div class="col-12 col-sm-6 col-xl-6 col-md-6  contenedor3 mx-auto">
       <div style="padding: 20px; " class="tamano">
-        <form class="tamano contenedor c6 mx-auto" >
+        <form class="tamano contenedor c10 mx-auto" >
           <input type="text" class="form-control my-3  imput" placeholder="nombres">
           <input type="text" class="form-control my-3 imput" placeholder="apellidos">
           <input type="number" min="15" max="60" class="form-control my-2 imput" placeholder="edad">
@@ -119,8 +119,8 @@
 
 </div>
 <div id="ordenesEntregadas" class="row" style="display: none;">
-  <div class="form col-10 mx-auto my-3 c6" style="padding:10px; ">
-    <div class="c6 my-2" style="padding:5px 20px 5px 20px; width:min-content; color: white;"><h6>Desde:</h6></div>
+  <div class="form col-10 mx-auto my-3 c13 sombra4" style="padding:10px; ">
+    <div class="c10 my-2" style="padding:5px 20px 5px 20px; width:min-content; color: white;"><h6>Desde:</h6></div>
     <div class="tamano flex_container2"><select name="tiempo" id="tiempoEntregadas" class="  imput2 "></select></div>
   </div>
 </div>
@@ -137,7 +137,7 @@
           
         </div>
         <div class="modal-footer linea" id="modalPie">
-          <button type="button" class="btn btn-secondary boton" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary boton " data-bs-dismiss="modal">Close</button>
          
         </div>
       </div>
@@ -147,7 +147,7 @@
  <div id="base" class="tamano" style="margin-top: 20px;">
    
  </div>
- <div >
+ <div id="map">
    
  </div>
   
@@ -156,6 +156,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/build/ol.js"></script>
     <script src="js/controlador.js"></script>
+   
+    
+    
 </body>
 </html>
