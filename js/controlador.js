@@ -344,7 +344,7 @@ var facturas = [
         
     
 ];
-
+var codigoRepartidorActual = 1;
 function registrarse(){
     console.log("registrarse");
     document.getElementById('barraNav').className='navbar navbar-light  barra3';
@@ -359,6 +359,21 @@ function registrarse(){
     document.getElementById('contenidoRegistrar2').style.display= "block";
     document.getElementById('btnRegistro').style.display= "none";
     
+}
+function loginRepartidor(){
+    axios({
+        url: '../backend/api/repartidoresContratados.php',
+        method: 'post',
+        responseType: 'json',
+        data: {
+            "correo": document.getElementById('loginCorreo').value,
+            "contraseña": document.getElementById('loginPassword').value
+        }
+    }).then(res=>{
+       console.log(res);
+    }).catch(error=>{
+        console.error(error);
+    });
 }
 function ordenes(){
     
