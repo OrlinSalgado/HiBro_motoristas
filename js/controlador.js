@@ -385,20 +385,32 @@ function ordenes(){
 function tomarOrden(){
     document.getElementById('barraNav').className='navbar navbar-light  barra4 barra-general'
     document.getElementById('cuerpo').className='cuerpo-general fondo4';
-    console.log('tomar orden');
+    
     document.getElementById('bienvenidoMotorista').style.display= "none";
-   // document.getElementById('base').style.display= "none";
+   //// document.getElementById('base').style.display= "none";
     document.getElementById('ordenesPorTomar').style.display= "block";
-    ordenesSinTomar.forEach(function(sinTomar, i){
-        document.getElementById('ordenesPorTomar').innerHTML += `
-        <div class="col-10 mx-auto my-2 c10 row flex_container sombra2" style="text-align: left; font-size: 13px; border-radius: 20px;" onclick="mostrarDetalle(${i},'${sinTomar.estadoOrden}');" data-bs-toggle="modal" data-bs-target="#detalleModal">
-        <img src="img/libro1.png" style="width: 100px;">
-        <div class="info_orden3  c7 c12 tamano3 sombra3 " >
-          <p><b>cliente: </b> ${sinTomar.cliente}<br><b>codigo: </b>${sinTomar.codigo}</p>
-        </div>  
-    </div>
-    <hr style="color: #531274;"> `;
+
+    axios({
+        url: '../backend/api/ordenesSinTomar.php',
+        method: 'get',
+        responseType: 'json'
+    }).then(res=>{
+        ordenesSinTomar = res.data;
+        ordenesSinTomar.forEach(function(sinTomar, i){
+            document.getElementById('ordenesPorTomar').innerHTML += `
+            <div class="col-10 mx-auto my-2 c10 row flex_container sombra2" style="text-align: left; font-size: 13px; border-radius: 20px;" onclick="mostrarDetalle(${i},'sinTomar');" data-bs-toggle="modal" data-bs-target="#detalleModal">
+            <img src="img/libro1.png" style="width: 100px;">
+            <div class="info_orden3  c7 c12 tamano3 sombra3 " >
+              <p><b>cliente: </b> ${sinTomar.nombreCliente}<br><b>codigo: </b>${sinTomar.codigoOrden}</p>
+            </div>  
+        </div>
+        <hr style="color: #531274;"> `;
+        });
+    }).catch(error=>{
+        console.error(error);
     });
+
+    
 }
 function ordenTomada(){
     document.getElementById('cuerpo').className=' fondo5';
@@ -451,8 +463,9 @@ function ordenEntregada(){
 }
 
 function mostrarDetalle(indice, estado){
+    var orden='';
     console.log(indice,estado)
-   let orden='';
+   
     if (estado==='tomada') {
         orden= ordenesTomadas[indice];
         document.getElementById('modalCabecera').innerHTML =`
@@ -460,13 +473,24 @@ function mostrarDetalle(indice, estado){
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         `;
     }
-    else if (estado==='portomar') {
-        orden= ordenesSinTomar[indice];
-        document.getElementById('modalCabecera').innerHTML =`
-         <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
-        <button type="button " class="btn btn-secondary boton2" onclick="guardarOrden();">Tomar Orden</button>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        `;
+    else if (estado==='sinTomar') {
+        axios({
+            url: '../backend/api/ordenesSinTomar.php?idOrden='+indice,
+            method: 'get',
+            responseType: 'json'
+        }).then(res=>{
+            orden = res.data;
+            
+            document.getElementById('modalCabecera').innerHTML =`
+             <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
+            <button type="button " class="btn btn-secondary boton2" onclick="guardarOrden();">Tomar Orden</button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            `;
+            mostrarOrden(orden);
+        }).catch(error=>{
+            console.error(error);
+        });
+        
     }
     else{
         orden= ordenesEntregadas[indice];
@@ -475,31 +499,60 @@ function mostrarDetalle(indice, estado){
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         `;
     }
+    /*console.log(orden);
     console.log('mostrar detalle' ,indice);
     document.getElementById('modalFondo').style.background ='linear-gradient(to bottom left, #541274, #9a79f4)';
-    let pedidos='';
-    for (let i = 0; i < orden.pedidos.length; i++) {
+    let pedidos=`<b>Empresa: </b>${orden.empresa}<br>`;
+    for (let i = 0; i < orden.productos.length; i++) {
       pedidos +=`<p>
       <b>#${i+1}</b><br>
-      <b>Empresa: </b>${orden.pedidos[i].empresa}<br>
-      <b>Producto: </b>${orden.pedidos[i].nombreProducto}<br>
-      <b>Descripcion: </b>${orden.pedidos[i].descripcion}<br>
-      <b>Cantidad: </b>${orden.pedidos[i].cantidad}<br>
-      <b>precio: </b>${orden.pedidos[i].precioProducto} $</p>`;  
+      
+      <b>Producto: </b>${orden.productos[i].nombre}<br>
+      <b>Descripcion: </b>no hay<br>
+      <b>Cantidad: </b>${orden.cantidades[i]}<br>
+      <b>precio: </b>${orden.productos[i].precio} $</p>`;  
         
     }
 
     document.getElementById('modalContenido').innerHTML =`
     <div class= "tamano2 c9 mx-auto contenedor"><p>
-    <b>cliente: </b>${orden.cliente}<br>
-    <b>Ubicacion: </b>${orden.ubicacion}<br>
-    <b>Metodo de pago: </b>${orden.metodoPago}<br>
-    <b>Fecha: </b>${orden.fecha}<br></p>
+    <b>cliente: </b>${orden.nombreCliente}<br>
+    <b>Ubicacion: </b>${orden.direccionEntrega}<br>
+    <b>Metodo de pago: </b>tarjeta<br>
+    <b>Fecha: </b>${orden.fecha}<br>
+    <b>Hora: </b>${orden.hora}<br></p>
     <hr>
     <b>pedidos: </b>
     <hr>
     <div>${pedidos}</div>
-    </div>`;
+    </div>`;*/
+}
+function mostrarOrden(orden){
+    document.getElementById('modalFondo').style.background ='linear-gradient(to bottom left, #541274, #9a79f4)';
+    let pedidos=`<b>Empresa: </b>${orden.empresa}<br>`;
+    for (let i = 0; i < orden.productos.length; i++) {
+      pedidos +=`<p>
+      <b>#${i+1}</b><br>
+      
+      <b>Producto: </b>${orden.productos[i].nombre}<br>
+      <b>Descripcion: </b>no hay<br>
+      <b>Cantidad: </b>${orden.cantidades[i]}<br>
+      <b>precio: </b>${orden.productos[i].precio} $</p>`;  
+        
+    }
+
+    document.getElementById('modalContenido').innerHTML =`
+    <div class= "tamano2 c9 mx-auto contenedor"><p>
+    <b>cliente: </b>${orden.nombreCliente}<br>
+    <b>Ubicacion: </b>${orden.direccionEntrega}<br>
+    <b>Metodo de pago: </b>tarjeta<br>
+    <b>Fecha: </b>${orden.fecha}<br>
+    <b>Hora: </b>${orden.hora}<br></p>
+    <hr>
+    <b>pedidos: </b>
+    <hr>
+    <div>${pedidos}</div>
+    </div>`; 
 }
 function mostrarEstado(indice, estado){
    let mostrar = document.getElementById(`mostrarEstado${indice}`).style.display;
