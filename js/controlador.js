@@ -1,3 +1,5 @@
+var repartidorActual;
+
 var ordenesSinTomar=[
     {
         cliente: 'Jose Lopez',
@@ -344,7 +346,8 @@ var facturas = [
         
     
 ];
-var codigoRepartidorActual = 1;
+
+
 function registrarse(){
     console.log("registrarse");
     document.getElementById('barraNav').className='navbar navbar-light  barra3';
@@ -352,17 +355,80 @@ function registrarse(){
     document.getElementById('contenido').style.display= "none";
     document.getElementById('contenido2').style.display= "none";
    
-   
-    
-   
     document.getElementById('contenidoRegistrar').style.display= "block";
     document.getElementById('contenidoRegistrar2').style.display= "block";
     document.getElementById('btnRegistro').style.display= "none";
     
 }
+function verificarRegistro(){
+    re=/^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    let nombres = document.getElementById('rgNombres').value;
+    let apellidos = document.getElementById('rgApellidos').value;
+    let cedula = document.getElementById('rgCedula').value;
+    let edad = document.getElementById('rgEdad').value;
+    let correo = document.getElementById('rgCorreo').value;
+    let celular = document.getElementById('rgTelefono').value;
+    let direccion = document.getElementById('rgDireccion').value;
+    let fechaNacimiento = document.getElementById('rgFechaNacimiento').value;
+    let genero = '';
+    let password = document.getElementById('rgPassword').value;
+    if (document.getElementById('rdGenero1').checked) {
+        genero = 'Hombre';
+    }
+    if (document.getElementById('rdGenero2').checked) {
+        genero = 'Mujer';
+    }
+    if (nombres == "" || apellidos == "" || cedula == "" || edad == "" || correo == "" || celular == "" || direccion == "" || fechaNacimiento == "" || genero == "" || password == "") {
+        document.getElementById('errorRegistro').innerHTML = 'llene todos lo campos';
+        document.getElementById('errorRegistro').style.display = "block";
+        document.getElementById('frmRegistro').className = 'error';
+        alert('llene todos los campos');
+    }
+    else if(!re.exec(correo)){
+		alert('email no valido');
+        document.getElementById('errorRegistro').innerHTML = 'correo no valido';
+        document.getElementById('errorRegistro').style.display = "block";
+	}
+    else{
+        axios({
+            url: '../backend/api/repartidoresPendientes.php',
+            method: 'post',
+            responseType: 'json',
+            data: {
+                "codigoRepartidor": null,
+                "nombres": nombres,
+                "apellidos": apellidos,
+                "correo": correo,
+                "contrasena": password,
+                "cedula": cedula,
+                "direccion": direccion,
+                "celular": celular,
+                "edad": edad,
+                "fechaNacimiento": fechaNacimiento,
+                "genero": genero,
+                "estado": "pendiente",
+                "comision": null
+            }
+        }).then(res=>{
+            console.log(res.data);
+            alert('solicitud enviada');
+            document.getElementById('contenido').style.display = "block";
+            document.getElementById('contenidoRegistrar').style.display = "none";
+            document.getElementById('contenidoRegistrar2').style.display = "none";
+           
+        }).catch(error=>{
+            console.error(error);
+        });
+
+       
+
+    }
+
+}
+
 function loginRepartidor(){
     axios({
-        url: '../backend/api/repartidoresContratados.php',
+        url: '../backend/api/loginRepartidores.php',
         method: 'post',
         responseType: 'json',
         data: {
@@ -370,25 +436,91 @@ function loginRepartidor(){
             "contraseña": document.getElementById('loginPassword').value
         }
     }).then(res=>{
-       console.log(res);
+        if (res.data.codigoRespuesta == 1) {
+            document.getElementById('loginError').style.display = 'none';
+            console.log(res);
+            ordenes(res.data.repartidor);
+        }else{
+            document.getElementById('loginError').style.display = 'block';
+            document.getElementById('loginError').innerHTML = 'Error datos erroneos';
+            console.log('error datos incorrectos');
+        }
+       
     }).catch(error=>{
         console.error(error);
     });
 }
-function ordenes(){
-    
+function cerrarSesion(){
+    axios({
+        url: '../backend/api/cerrarSesionRepartidor.php',
+        method: 'get',
+        responseType: 'json',
+        
+    }).then(res=>{
+        document.getElementById('contenido').style.display= "block";
+        document.getElementById('bienvenidoMotorista').style.display= "none";
+        document.getElementById('ordenesPorTomar').style.display= "none";
+        document.getElementById('ordenesTomadas').style.display= "none";
+        document.getElementById('ordenesEntregadas').style.display= "none";
+        document.getElementById('botonCerrarSesion').style.display= "none";
+        document.getElementById('navegacion').innerHTML=`
+            <a class="navbar-brand" >
+                <div class="flex_container tamano c4" >
+                    <img src="img/logo.png" alt="" width="80px" id="imagenLogo">
+                <h4>HiBro!</h4>
+            </div>
+            </a>
+            <button class="btn btn-secondary boton " type="button" onclick="registrarse()" id="btnRegistro">registrarse</button>`;
+        document.getElementById('cuerpo').className='cuerpo-general fondo1';
+        document.getElementById('barraNav').className='navbar navbar-light  barra barra-general';
+        
+       
+    }).catch(error=>{
+        console.error(error);
+    });
+}
+
+function ordenes(repartidor){
+    repartidorActual = repartidor;
     let fondo=document.getElementById('cuerpo');
     fondo.className='cuerpo-general fondo2';
     let barra=document.getElementById('barraNav');
     barra.className='navbar navbar-light  barra2 barra-general';
-    
-    
+    document.getElementById('tituloBienvenida').innerHTML = `Bienvenido ${repartidor.nombres}`;
+    document.getElementById('verOrdenes').innerHTML = `
+    <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
+        <div class="info_orden flex_container2 c11 sombra1" style=" left: 80px; top: 20px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor"onclick="tomarOrden()" style="padding-left:40px;"><h5>Tomar Nueva Orden</h5></div>
+        </div>
+        <div class="circulo c11 flex_container2 sombra1" style="bottom: 70px;"> 
+          <img src="img/tomar.png" class="circulo2 cursor" onclick="tomarOrden()">
+        </div>
+      </div>
+      
+      <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
+        <div class="info_orden flex_container2 c11 sombra1" style=" left: 40px; bottom: 40px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor" onclick="ordenTomada();"><h5 style="margin-left: 70px;">Ordenes Tomadas</h5></div>
+        </div>
+        <div class="circulo c11 flex_container2 sombra1" style="bottom: 130px; "> 
+          <img src="img/tomadas.jpg" class="circulo2 cursor" onclick="ordenTomada();">
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
+        <div class="info_orden flex_container2 c11 sombra1" style=" left: 80px; bottom: 100px;">
+          <div class="info_orden2 c9 flex_container2 c7 cursor" style="padding-left:40px;" onclick="ordenEntregada();"><h5>Ordenes Entregadas</h5></div>
+        </div>
+        <div class="circulo c11 sombra1 flex_container2" style="bottom: 190px;"> 
+          <img src="img/entregadas.jpg" class="circulo2 cursor" onclick="ordenEntregada()">
+        </div>
+      </div>`;
     document.getElementById('bienvenidoMotorista').style.display= "block";
     //document.getElementById('imagenLogo').style.display= "none";
     //document.getElementById('navegacion').style.justifyContent= "space-between";
     document.getElementById('navegacion').innerHTML +=`
-    <img src="img/cuenta.png"  width="70px" id="imagenCuenta" ></div>
-    <button type="button" class="btn btn-secondary boton2" onclick="crearMapa();">mostrar ubicacion</button>
+    
+    <div style="width:max-content;"  id="botonCerrarSesion" onclick="cerrarSesion();"><div class="flex_container2"><img src="img/cuenta.png"  width="70px" id="imagenCuenta" class="centrar"></div>
+    <i class="fas mx-2 fa-door-open c4"> cerrar sesion</i></div>
     <div id="mapa"></div>`;
     
     document.getElementById('contenido').style.display= "none";
@@ -398,12 +530,14 @@ function ordenes(){
     
 }
 function tomarOrden(){
-    document.getElementById('barraNav').className='navbar navbar-light  barra4 barra-general'
+    
+    document.getElementById('barraNav').className='navbar navbar-light  barra4 barra-general';
     document.getElementById('cuerpo').className='cuerpo-general fondo4';
     
     document.getElementById('bienvenidoMotorista').style.display= "none";
    //// document.getElementById('base').style.display= "none";
     document.getElementById('ordenesPorTomar').style.display= "block";
+    document.getElementById('ordenesPorTomar').innerHTML ='';
 
     axios({
         url: '../backend/api/ordenesSinTomar.php',
@@ -415,7 +549,7 @@ function tomarOrden(){
             document.getElementById('ordenesPorTomar').innerHTML += `
             <div class="col-10 mx-auto my-2 c10 row flex_container sombra2" style="text-align: left; font-size: 13px; border-radius: 20px;" onclick="mostrarDetalle(${i},'sinTomar');" data-bs-toggle="modal" data-bs-target="#detalleModal">
             <img src="img/libro1.png" style="width: 100px;">
-            <div class="info_orden3  c7 c12 tamano3 sombra3 " >
+            <div class="info_orden3  c7 c5 dis_bordes2 tamano3 sombra3 " >
               <p><b>cliente: </b> ${sinTomar.nombreCliente}<br><b>codigo: </b>${sinTomar.codigoOrden}</p>
             </div>  
         </div>
@@ -431,50 +565,77 @@ function ordenTomada(){
     document.getElementById('cuerpo').className=' fondo5';
     barra=document.getElementById('barraNav').className='navbar navbar-light  c12 barra-general';
     console.log('ordenes tomadas');
-   // document.getElementById('base').style.display= "none";
     document.getElementById('ordenesPorTomar').style.display= "none";
     document.getElementById('bienvenidoMotorista').style.display= "none";
     document.getElementById('ordenesTomadas').style.display= "block";
-    ordenesTomadas.forEach(function(tomadas, i){
-        document.getElementById('ordenesTomadas').innerHTML += `
-        <div class="col-10 mx-auto my-4 c12 borde2 row flex_container cursor" style="text-align: left; border-radius: 20px;"  onclick="mostrarEstado(${i}, '${tomadas.estadoOrden}');" >
-        <div class="info_orden3 my-2 mx-auto col-12 row" style="color: #ffffff; " >
-          <div class="col-3 flex_container"><img src="img/libro2.png" style="width: 100px; position: absolute; ;left: 0px;" ></div>
-            <div class="col-8 c9 c7 texto  flex_container"style="margin-left: auto; border-radius: 10px;">
-              <p><b>cliente: </b> ${tomadas.cliente}
-              <br><b>codigo: </b>${tomadas.codigo}</p>
-            </div>
-            <div class="row my-4">
-                 <div  id= "mostrarEstado${i}" style="display: none;" class="flex-container2 col-12"></div>
-            </div>
-            
-         
-        </div>  
-    </div>
-    <hr style="color: #531274;">
- </div> `});
+    document.getElementById('ordenesTomadas').innerHTML = '';
+    axios({
+        url: '../backend/api/ordenesTomadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor,
+        method: 'get',
+        responseType: 'json'
+        
+    }).then(res=>{
+        res.data.forEach(function(tomadas, i){
+            document.getElementById('ordenesTomadas').innerHTML += `
+            <div class="col-10 mx-auto my-4 c12 borde2 row flex_container cursor" style="text-align: left; border-radius: 20px;"  onclick="mostrarEstado(${i}, 'tomada');" >
+            <div class="info_orden3 my-2 mx-auto col-12 row" style="color: #ffffff; " >
+              <div class="col-3 flex_container"><img src="img/libro2.png" style="width: 100px; position: absolute; ;left: 0px;" ></div>
+                <div class="col-8 c9 c7 texto  flex_container"style="margin-left: auto; border-radius: 10px;">
+                  <p><b>cliente: </b> ${tomadas.nombreCliente}
+                  <br><b>codigo: </b>${tomadas.codigoOrden}</p>
+                </div>
+                <div class="row my-4">
+                     <div  id= "mostrarEstado${i}" style="display: none;" class="flex-container2 col-12"></div>
+                </div>
+                
+             
+            </div>  
+        </div>
+        <hr style="color: #531274;">
+     </div> `});
+       
+    }).catch(error=>{
+        console.error(error);
+    });
+   
+    
 
 }
 
 function ordenEntregada(){
     document.getElementById('cuerpo').className=' fondo6';
-    barra=document.getElementById('barraNav').className='navbar navbar-light  c12 barra-general';
+    document.getElementById('barraNav').className='navbar navbar-light  barra4 barra-general';
+    
     console.log('ordenes entregadas');
     document.getElementById('bienvenidoMotorista').style.display= "none";
     //document.getElementById('base').style.display= "none";
     document.getElementById('ordenesPorTomar').style.display= "none";
     document.getElementById('ordenesTomadas').style.display= "none";
     document.getElementById('ordenesEntregadas').style.display= "block";
+    document.getElementById('ordenesEntregadas').innerHTML = '';
 
-    ordenesEntregadas.forEach(function(entregadas, i){
-        document.getElementById('ordenesEntregadas').innerHTML += `
-        <div class="col-8 mx-auto my-2 c13 sombra4 row flex_container" style="text-align: left;" onclick="mostrarDetalle(${i},'${entregadas.estadoOrden}');" data-bs-toggle="modal" data-bs-target="#detalleModal">
-        <img src="img/libro3.png" style="width: 70px;">
-        <div class="  col-8 c4 c13 sombra4" >
-          <p style="font-size: 12px;"><b>cliente: </b> ${entregadas.cliente}<br><b>codigo: </b>${entregadas.codigo}</p>
-        </div>  
-    </div>
-    <hr style="color: #531274;"> `;});
+    axios({
+        url: '../backend/api/ordenesEntregadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor,
+        method: 'get',
+        responseType: 'json'
+        
+    }).then(res=>{
+        console.log(res.data);
+        res.data.forEach(function(entregadas, i){
+            document.getElementById('ordenesEntregadas').innerHTML += `
+            <div class="col-8 mx-auto my-2 c13 sombra4 row flex_container dis_bordes" style="text-align: left;" onclick="mostrarDetalle(${i},'entregada');" data-bs-toggle="modal" data-bs-target="#detalleModal">
+            <div class= "col-4"><i class="fas fa-2x c4 fa-check-double"></i></div>
+            
+            <div class="  col-8 c4 c13 sombra4" >
+              <p style="font-size: 12px;"><b>cliente: </b> ${entregadas.nombreCliente}<br><b>codigo: </b>${entregadas.codigoOrden}</p>
+            </div>  
+        </div>
+         `;});
+        
+    }).catch(error=>{
+        console.error(error);
+    });
+   
 }
 
 function mostrarDetalle(indice, estado){
@@ -482,11 +643,22 @@ function mostrarDetalle(indice, estado){
     console.log(indice,estado)
    
     if (estado==='tomada') {
-        orden= ordenesTomadas[indice];
-        document.getElementById('modalCabecera').innerHTML =`
-         <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        `;
+        axios({
+            url: '../backend/api/ordenesTomadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor+'&idOrden='+indice,
+            method: 'get',
+            responseType: 'json'
+        }).then(res=>{
+            orden = res.data;
+            console.log(orden);
+          document.getElementById('modalCabecera').innerHTML =`
+            <h5 class="modal-title" id="detalleModalLabel">Orden tomada #${indice+1}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            `;
+            mostrarOrden(orden);
+        }).catch(error=>{
+            console.error(error);
+        });
+        
     }
     else if (estado==='sinTomar') {
         axios({
@@ -497,8 +669,8 @@ function mostrarDetalle(indice, estado){
             orden = res.data;
             
             document.getElementById('modalCabecera').innerHTML =`
-             <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
-            <button type="button " class="btn btn-secondary boton2" onclick="guardarOrden();">Tomar Orden</button>
+             <h5 class="modal-title" id="detalleModalLabel">Orden sin tomar#${indice+1}</h5>
+            <button type="button " class="btn btn-secondary boton2" onclick="guardarOrden(${indice});" data-bs-dismiss="modal" aria-label="Close">Tomar Orden</button>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             `;
             mostrarOrden(orden);
@@ -508,12 +680,25 @@ function mostrarDetalle(indice, estado){
         
     }
     else{
-        orden= ordenesEntregadas[indice];
-        document.getElementById('modalCabecera').innerHTML =`
-         <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
+        axios({
+            url: '../backend/api/ordenesEntregadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor+'&idOrden='+indice,
+            method: 'get',
+            responseType: 'json'
+        }).then(res=>{
+            orden = res.data;
+            document.getElementById('modalCabecera').innerHTML =`
+         <h5 class="modal-title" id="detalleModalLabel">Orden entregada #${indice+1}</h5>
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         `;
+            
+            mostrarOrden(orden);
+        }).catch(error=>{
+            console.error(error);
+        });
+        
+        
     }
+   
     /*console.log(orden);
     console.log('mostrar detalle' ,indice);
     document.getElementById('modalFondo').style.background ='linear-gradient(to bottom left, #541274, #9a79f4)';
@@ -542,6 +727,37 @@ function mostrarDetalle(indice, estado){
     <div>${pedidos}</div>
     </div>`;*/
 }
+function guardarOrden(indice){
+    
+    console.log(repartidorActual);
+    console.log(indice);
+    axios({
+        url: '../backend/api/ordenesSinTomar.php?idOrden='+indice,
+        method: 'post',
+        responseType: 'json',
+        data: {
+            "estado":"tomada",
+            "estados":"",
+            "coordenadasRepartidor":"",
+            "nombreCliente":"",
+            "nombreRepartidor":repartidorActual.nombres,
+            "codigoCliente":"",
+            "codigoRepartidor":repartidorActual.codigoRepartidor,
+            "codigoOrden":"",
+            "direccionEntrega":"",
+            "empresa":"",
+            "productos":"",
+            "cantidades":"",
+            "fecha":"",
+            "hora":"",
+            "isv":""
+        }
+    }).then(res=>{
+        console.log(res.data);
+    }).catch(error=>{
+        console.error(error);
+    });
+}
 function mostrarOrden(orden){
     document.getElementById('modalFondo').style.background ='linear-gradient(to bottom left, #541274, #9a79f4)';
     let pedidos=`<b>Empresa: </b>${orden.empresa}<br>`;
@@ -550,7 +766,6 @@ function mostrarOrden(orden){
       <b>#${i+1}</b><br>
       
       <b>Producto: </b>${orden.productos[i].nombre}<br>
-      <b>Descripcion: </b>no hay<br>
       <b>Cantidad: </b>${orden.cantidades[i]}<br>
       <b>precio: </b>${orden.productos[i].precio} $</p>`;  
         
@@ -560,11 +775,10 @@ function mostrarOrden(orden){
     <div class= "tamano2 c9 mx-auto contenedor"><p>
     <b>cliente: </b>${orden.nombreCliente}<br>
     <b>Ubicacion: </b>${orden.direccionEntrega}<br>
-    <b>Metodo de pago: </b>tarjeta<br>
     <b>Fecha: </b>${orden.fecha}<br>
     <b>Hora: </b>${orden.hora}<br></p>
     <hr>
-    <b>pedidos: </b>
+    <b>pedido: </b>
     <hr>
     <div>${pedidos}</div>
     </div>`; 
@@ -581,25 +795,61 @@ function mostrarEstado(indice, estado){
     document.getElementById(`mostrarEstado${indice}`).innerHTML =`
         <button type="button" class="btn btn-secondary boton  my-1 " onclick="mostrarDetalle(${indice},'${estado}');" data-bs-toggle="modal" data-bs-target="#detalleModal">Ver orden</button>
         <h6 class="c7">Estado: </h6>`;
-        
-    ordenesTomadas[indice].estados.forEach(function(actual,i){
-        let opcion='';
-        if (actual==='entregada') {
-            opcion='data-bs-toggle="modal" data-bs-target="#detalleModal"';
-        }
-        document.getElementById(`mostrarEstado${indice}`).innerHTML +=`
-        <button type="button" class="btn btn-secondary bt bt${i+1} my-1 mx-1" onclick="eliminarEstado(${indice},${i});" ${opcion}>${actual}</button>`;
-    });
+        axios({
+            url: '../backend/api/ordenesTomadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor,
+            method: 'get',
+            responseType: 'json'
+            
+        }).then(res=>{
+            res.data[indice].estados.forEach(function(actual,i){
+                let opcion='';
+                if (actual==='entregada') {
+                    opcion='data-bs-toggle="modal" data-bs-target="#detalleModal"';
+                }
+                document.getElementById(`mostrarEstado${indice}`).innerHTML +=`
+                <button type="button" class="btn btn-secondary bt bt${i+1} my-1 mx-1" onclick="eliminarEstado(${indice},${i});" ${opcion}>${actual}</button>`;
+            });
+        }).catch(error=>{
+            console.error(error);
+        });
+    
     
 }
-function eliminarEstado(indice,i){
-    console.log('eliminar boton',i);
-    ordenesTomadas[indice].estadoEntrega=`${ordenesTomadas[indice].estados[i]}`;
+function eliminarEstado(idOrden,idEstado){
+    console.log('eliminar boton',idEstado);
+    navigator.geolocation.getCurrentPosition(fn_ok, fn_mal);
+    function fn_mal() {
+        console.log('nos se pudo obtener tu localizacion');
+    }
+    function fn_ok(respuesta) {
+        lat =  respuesta.coords.latitude;
+       lon =  respuesta.coords.longitude;
+       
+       axios({
+        url: '../backend/api/ordenesTomadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor+'&idOrden='+idOrden+'&idEstado='+idEstado,
+        method: 'post',
+        responseType: 'json',
+        data: {
+            "coordenadas":{
+                "longitud":lon,
+                "latitud":lat
+            }
+        }
+        
+        }).then(res=>{
+        console.log(res.data);
+        }).catch(error=>{
+            console.error(error);
+        });
+       
+    }
+    
+   /* ordenesTomadas[indice].estadoEntrega=`${ordenesTomadas[indice].estados[i]}`;
     if ( ordenesTomadas[indice].estadoEntrega==='entregada') {
         mostrarFactura(indice);
     }else{
         ordenesTomadas[indice].estados.splice(i, 1,);
-    }
+    }*/
    
     
 }
@@ -659,9 +909,10 @@ function mostrarFactura(indice) {
 
 
 
+
 function crearMapa() {
     var divMapa = document.getElementById('map');
-    navigator.geolocation.getCurrentPosition(fn_ok, fn_mal)
+    navigator.geolocation.getCurrentPosition(fn_ok, fn_mal);
     function fn_mal() {
         console.log('nos se pudo obtener tu localizacion');
     }
