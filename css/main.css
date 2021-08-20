@@ -357,6 +357,9 @@
     border-radius: 80px;
    
 }
+.ajustar{
+    width: max-content;
+}
 .info_orden{
     width: max-content;
     margin-top: 30px;

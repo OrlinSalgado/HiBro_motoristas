@@ -412,7 +412,7 @@ function verificarRegistro(){
                 "edad": edad,
                 "fechaNacimiento": fechaNacimiento,
                 "genero": genero,
-                "estado": "pendiente",
+                "estado": false,
                 "comision": null
             }
         }).then(res=>{
@@ -463,23 +463,17 @@ function cerrarSesion(){
         responseType: 'json',
         
     }).then(res=>{
+        retroceso = 'sesionCerrada';
         document.getElementById('contenido').style.display= "block";
         document.getElementById('bienvenidoMotorista').style.display= "none";
         document.getElementById('ordenesPorTomar').style.display= "none";
         document.getElementById('ordenesTomadas').style.display= "none";
         document.getElementById('ordenesEntregadas').style.display= "none";
         document.getElementById('botonCerrarSesion').style.display= "none";
-        document.getElementById('navegacion').innerHTML=`
-            <a class="navbar-brand" >
-                <div class="flex_container tamano c4" >
-                    <img src="img/logo.png" alt="" width="80px" id="imagenLogo">
-                <h4>HiBro!</h4>
-            </div>
-            </a>
-            <button class="btn btn-secondary boton " type="button" onclick="registrarse()" id="btnRegistro">registrarse</button>`;
+        document.getElementById('btnRegistro').style.display= "block";
         document.getElementById('cuerpo').className='cuerpo-general fondo1';
         document.getElementById('barraNav').className='navbar navbar-light  barra barra-general';
-        document.getElementById('botonCerrarSesion').style.display = "none";
+        
        
     }).catch(error=>{
         console.error(error);
@@ -488,9 +482,16 @@ function cerrarSesion(){
 
 function ordenes(repartidor){
     repartidorActual = repartidor;
+    
+    if (retroceso != 'sesionCerrada') {
+        document.getElementById('ordenesTomadas').style.display= "none";
     document.getElementById('ordenesEntregadas').style.display= "none";
     document.getElementById('ordenesPorTomar').style.display= "none";
-    document.getElementById('botonCerrarSesion').style.display = "block";
+    }
+    if ( document.getElementById('botonCerrarSesion').style.display = 'none') {
+        document.getElementById('botonCerrarSesion').style.display = 'block';
+    }
+   
     document.getElementById('cuerpo').className='cuerpo-general fondo2';
     document.getElementById('barraNav').className='navbar navbar-light  barra2 barra-general';
     document.getElementById('tituloBienvenida').innerHTML = `Bienvenido ${repartidor.nombres}`;
@@ -943,9 +944,25 @@ function mostrarFactura(orden, indiceOrden) {
     
     }).then(res=>{
         console.log(res.data);
+        terminarOrden(indiceOrden);
     }).catch(error=>{
         console.error(error);
     });
+
+}
+function terminarOrden(indiceOrden){
+    console.log('terminar orden: '+indiceOrden);
+    axios({
+        url: '../backend/api/ordenesTomadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor+'&inOrden='+indiceOrden,
+        method: 'delete',
+        responseType: 'json'
+        
+        }).then(res=>{
+            console.log(res.data);
+            ordenes(repartidorActual);
+        }).catch(error=>{
+            console.error(error);
+        });
 
 }
 function retroceder(){
