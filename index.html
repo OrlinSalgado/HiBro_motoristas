@@ -16,12 +16,15 @@
   <nav class="navbar navbar-light bg-light barra" id="barraNav">
     <div class="container tamano" id="navegacion" >
       <a class="navbar-brand" >
-        <div class="flex_container tamano c4" >
+        <div class="flex_container tamano c4" id="logoHiBro">
           <img src="img/logo.png" alt="" width="80px" id="imagenLogo">
           <h4>HiBro!</h4>
         </div>
       </a>
+      <i class="fas fa-2x c15 fa-undo-alt" id="retroceder" onclick="retroceder()" style="display: none;"></i>
       <button class="btn btn-secondary boton " type="button" onclick="registrarse()" id="btnRegistro">registrarse</button>
+      <div style="width:max-content; display: none;"  id="botonCerrarSesion" onclick="cerrarSesion();"><div class="flex_container2"><img src="img/cuenta.png"  width="70px" id="imagenCuenta" class="centrar"></div>
+    <i class="fas mx-2 fa-door-open c4"> cerrar sesion</i></div>
     </div>
   </nav>
   

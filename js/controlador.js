@@ -1,4 +1,7 @@
 var repartidorActual;
+var retroceso;
+const comisionMotorista = 70;
+const comisionAdministracion = 10;
 
 var ordenesSinTomar=[
     {
@@ -349,6 +352,9 @@ var facturas = [
 
 
 function registrarse(){
+    retroceso = 'registro';
+    
+    document.getElementById('retroceder').style.display = "block";
     console.log("registrarse");
     document.getElementById('barraNav').className='navbar navbar-light  barra3';
     document.getElementById('cuerpo').className='cuerpo-general fondo3';
@@ -473,7 +479,7 @@ function cerrarSesion(){
             <button class="btn btn-secondary boton " type="button" onclick="registrarse()" id="btnRegistro">registrarse</button>`;
         document.getElementById('cuerpo').className='cuerpo-general fondo1';
         document.getElementById('barraNav').className='navbar navbar-light  barra barra-general';
-        
+        document.getElementById('botonCerrarSesion').style.display = "none";
        
     }).catch(error=>{
         console.error(error);
@@ -482,10 +488,11 @@ function cerrarSesion(){
 
 function ordenes(repartidor){
     repartidorActual = repartidor;
-    let fondo=document.getElementById('cuerpo');
-    fondo.className='cuerpo-general fondo2';
-    let barra=document.getElementById('barraNav');
-    barra.className='navbar navbar-light  barra2 barra-general';
+    document.getElementById('ordenesEntregadas').style.display= "none";
+    document.getElementById('ordenesPorTomar').style.display= "none";
+    document.getElementById('botonCerrarSesion').style.display = "block";
+    document.getElementById('cuerpo').className='cuerpo-general fondo2';
+    document.getElementById('barraNav').className='navbar navbar-light  barra2 barra-general';
     document.getElementById('tituloBienvenida').innerHTML = `Bienvenido ${repartidor.nombres}`;
     document.getElementById('verOrdenes').innerHTML = `
     <div class="col-12 col-sm-10 col-md-8 col-lg-7 col-xl-7 mx-auto">
@@ -517,11 +524,11 @@ function ordenes(repartidor){
     document.getElementById('bienvenidoMotorista').style.display= "block";
     //document.getElementById('imagenLogo').style.display= "none";
     //document.getElementById('navegacion').style.justifyContent= "space-between";
-    document.getElementById('navegacion').innerHTML +=`
-    
+    /*document.getElementById('navegacion').innerHTML =`
+    <i class="fas fa-3x c15 fa-undo-alt" id="retroceder" onclick="retroceder()" style="display: none;"></i>
     <div style="width:max-content;"  id="botonCerrarSesion" onclick="cerrarSesion();"><div class="flex_container2"><img src="img/cuenta.png"  width="70px" id="imagenCuenta" class="centrar"></div>
     <i class="fas mx-2 fa-door-open c4"> cerrar sesion</i></div>
-    <div id="mapa"></div>`;
+    `;*/
     
     document.getElementById('contenido').style.display= "none";
     document.getElementById('contenido2').style.display= "none";
@@ -530,7 +537,8 @@ function ordenes(repartidor){
     
 }
 function tomarOrden(){
-    
+    retroceso = 'ordenesSinTomar';
+    document.getElementById('retroceder').style.display = "block";
     document.getElementById('barraNav').className='navbar navbar-light  barra4 barra-general';
     document.getElementById('cuerpo').className='cuerpo-general fondo4';
     
@@ -562,6 +570,8 @@ function tomarOrden(){
     
 }
 function ordenTomada(){
+    retroceso = 'ordenesTomadas';
+    document.getElementById('retroceder').style.display = "block";
     document.getElementById('cuerpo').className=' fondo5';
     barra=document.getElementById('barraNav').className='navbar navbar-light  c12 barra-general';
     console.log('ordenes tomadas');
@@ -603,6 +613,8 @@ function ordenTomada(){
 }
 
 function ordenEntregada(){
+    retroceso = 'ordenesEntregadas';
+    document.getElementById('retroceder').style.display = "block";
     document.getElementById('cuerpo').className=' fondo6';
     document.getElementById('barraNav').className='navbar navbar-light  barra4 barra-general';
     
@@ -699,33 +711,7 @@ function mostrarDetalle(indice, estado){
         
     }
    
-    /*console.log(orden);
-    console.log('mostrar detalle' ,indice);
-    document.getElementById('modalFondo').style.background ='linear-gradient(to bottom left, #541274, #9a79f4)';
-    let pedidos=`<b>Empresa: </b>${orden.empresa}<br>`;
-    for (let i = 0; i < orden.productos.length; i++) {
-      pedidos +=`<p>
-      <b>#${i+1}</b><br>
-      
-      <b>Producto: </b>${orden.productos[i].nombre}<br>
-      <b>Descripcion: </b>no hay<br>
-      <b>Cantidad: </b>${orden.cantidades[i]}<br>
-      <b>precio: </b>${orden.productos[i].precio} $</p>`;  
-        
-    }
-
-    document.getElementById('modalContenido').innerHTML =`
-    <div class= "tamano2 c9 mx-auto contenedor"><p>
-    <b>cliente: </b>${orden.nombreCliente}<br>
-    <b>Ubicacion: </b>${orden.direccionEntrega}<br>
-    <b>Metodo de pago: </b>tarjeta<br>
-    <b>Fecha: </b>${orden.fecha}<br>
-    <b>Hora: </b>${orden.hora}<br></p>
-    <hr>
-    <b>pedidos: </b>
-    <hr>
-    <div>${pedidos}</div>
-    </div>`;*/
+   
 }
 function guardarOrden(indice){
     
@@ -754,6 +740,7 @@ function guardarOrden(indice){
         }
     }).then(res=>{
         console.log(res.data);
+        tomarOrden();
     }).catch(error=>{
         console.error(error);
     });
@@ -816,34 +803,52 @@ function mostrarEstado(indice, estado){
     
 }
 function eliminarEstado(idOrden,idEstado){
+    var lat =  1;
+    var lon = 2;
     console.log('eliminar boton',idEstado);
-    navigator.geolocation.getCurrentPosition(fn_ok, fn_mal);
+    
+    coordenadas = navigator.geolocation.getCurrentPosition(fn_ok, fn_mal);
     function fn_mal() {
         console.log('nos se pudo obtener tu localizacion');
     }
     function fn_ok(respuesta) {
-        lat =  respuesta.coords.latitude;
-       lon =  respuesta.coords.longitude;
-       
-       axios({
-        url: '../backend/api/ordenesTomadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor+'&idOrden='+idOrden+'&idEstado='+idEstado,
-        method: 'post',
-        responseType: 'json',
-        data: {
-            "coordenadas":{
-                "longitud":lon,
-                "latitud":lat
-            }
-        }
         
-        }).then(res=>{
-        console.log(res.data);
-        }).catch(error=>{
-            console.error(error);
-        });
-       
+       lat =  respuesta.coords.latitude;
+        lon =  respuesta.coords.longitude;
+       guardarcoordenadas(lat, lon);
+    }
+    function guardarcoordenadas(lat, lon){
+        axios({
+            url: '../backend/api/ordenesTomadas.php?codigoRepartidor='+repartidorActual.codigoRepartidor+'&idOrden='+idOrden+'&idEstado='+idEstado,
+            method: 'post',
+            responseType: 'json',
+            data: {
+                "coordenadas":{
+                    "longitud":lon,
+                    "latitud":lat
+                }
+            }
+            
+            }).then(res=>{
+                console.log(res.data);
+            if ( res.data.estado === "entregada") {
+               
+               mostrarFactura(res.data, idOrden);
+            }
+            else{
+                mostrarEstado(idOrden, res.data.estado);
+            }
+            
+            }).catch(error=>{
+                console.error(error);
+            });
+
+            
     }
     
+    
+
+    /**/
    /* ordenesTomadas[indice].estadoEntrega=`${ordenesTomadas[indice].estados[i]}`;
     if ( ordenesTomadas[indice].estadoEntrega==='entregada') {
         mostrarFactura(indice);
@@ -854,57 +859,109 @@ function eliminarEstado(idOrden,idEstado){
     
 }
 
-function mostrarFactura(indice) {
-    console.log('mostrar factura',indice);
+function mostrarFactura(orden, indiceOrden) {
+    console.log(orden);
+    console.log('mostrar factura',indiceOrden);
     document.getElementById('modalFondo').style.background ='linear-gradient(to bottom left, #541274, #9a79f4)';
     document.getElementById('modalCabecera').innerHTML =`
-    <h5 class="modal-title" id="detalleModalLabel">Orden #${indice+1}</h5>
+    <h5 class="modal-title" id="detalleModalLabel"> Factura de Orden #${indiceOrden+1}</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
    `;
    document.getElementById('modalPie').innerHTML=`
-   <button type="button " class="btn btn-secondary boton3 " onclick="finalizarOrden(${indice});">Finalizar pedido</button>
-   <button type="button " class="btn btn-secondary boton3 " onclick="borrarOrden(${indice});">orden cancelada</button>
    <button type="button" class="btn btn-secondary boton " data-bs-dismiss="modal">salir</button>
    `;
+
     let hoy = new Date();
     let fecha = hoy.getDate() + '-' + (hoy.getMonth()+1) + '-' + hoy.getFullYear();
     let hora = hoy.getHours()+ '-' + hoy.getMinutes() + '-' + hoy.getSeconds();
-    let isvTotal=0;
-    let comisionMotorista= 2;
-    let comisionAdminidtracion= 1;
+    let empresa = orden.empresa;
+    let isv = orden.isv;
+    //let comisionMotorista= 2;
+    //let comisionAdministracion= 1;
     let subtotal=0;
-    let totalComision= comisionMotorista + comisionAdminidtracion;
+    let totalComision= comisionMotorista + comisionAdministracion;
     let   totalPagar=0;
-    let orden = ordenesTomadas[indice];
     let detalle='';
-    for (let i = 0; i < orden.pedidos.length; i++) {
+    
+    for (let i = 0; i < orden.productos.length; i++) {
         detalle += `<div class="flex_container4 tamano">
-            <div style="width: max-content;">${orden.pedidos[i].cantidad}_${orden.pedidos[i].nombreProducto}</div>
-            <div style="width: max-content;">${orden.pedidos[i].precioProducto} $</div>
+            <div style="width: max-content;">${orden.cantidades[i]}_${orden.productos[i].nombre}</div>
+            <div style="width: max-content;">${orden.productos[i].precio} L</div>
         </div>`;
-        isvTotal = isvTotal+ orden.pedidos[i].isv;
-        subtotal = subtotal + (orden.pedidos[i].precioProducto )
+        
+        subtotal = subtotal + (orden.productos[i].precio*orden.cantidades[i]);
     }
-    totalPagar = subtotal + isvTotal + totalComision;
+    totalPagar = subtotal + isv + totalComision;
    
     document.getElementById('modalContenido').innerHTML =`
-   <div class="my-2 c4 mx-auto relleno_simple2"><div class="mx-4 my-3">repartidor: Juan Rodriguez</div></div>
+   <div class="my-2 c4 mx-auto relleno_simple2"><div class="mx-4 my-3">repartidor: ${repartidorActual.nombres+" "+repartidorActual.apellidos}</div></div>
    <div class= "tamano2 c9 mx-auto contenedor">
    
-   <p><b>cliente: </b>${orden.cliente}<br>
-   <b>Metodo de pago: </b>${orden.metodoPago}<br>
-   <b>Fecha: </b>${fecha} <b>hora: </b>${hora}</p>
+   <p><b>cliente: </b>${orden.nombreCliente}<br>
+   <b>Metodo de pago: </b>tarjeta<br>
+   <b>Fecha: </b>${fecha} <b>hora: </b>${hora}
+   <b>Empresa: </b>${empresa}</p>
    <hr>
    <div class="flex-container2 tamano"><div class="mx-auto" style="width: max-content;"><b>Detalle de compra</b></div></div>
    ${detalle}<hr>
-   <b>ISV:</b> ${isvTotal}$
+   <b>ISV:</b> ${isv}L
    <p>
-   <b>comision motorista: </b>${comisionMotorista} $<br>
-   <b>comision administracion: </b>${comisionAdminidtracion} $<br>
-   <b>total comision : </b>${totalComision} $</p>
+   <b>comision motorista: </b>${comisionMotorista} L<br>
+   <b>comision administracion: </b>${comisionAdministracion} L<br>
+   <b>total comision : </b>${totalComision} L</p>
    <hr>
-   <h6><b>total a pagar: </b> ${totalPagar} $</h6>
+   <h6><b>total a pagar: </b> ${totalPagar} L</h6>
    </div>`;
+
+   //guardar factura
+   let pedido = {
+    "productos": orden.productos,
+    "cantidades": orden.cantidades
+   };
+
+   axios({
+    url: '../backend/api/facturas.php',
+    method: 'post',
+    responseType: 'json',
+    data: {
+        "nombreRepartidor": repartidorActual.nombres+" "+repartidorActual.apellidos,
+        "codigoRepartidor": repartidorActual.codigoRepartidor,
+        "nombreCliente": orden.nombreCliente,
+        "codigoCliente": orden.codigoCliente,
+        "metodoPago": "tarjeta",
+        "empresa": empresa,
+        "pedido": pedido,
+        "isv": isv,
+        "comisionMotorista": comisionMotorista,
+        "comisionAdministracion":comisionAdministracion,
+        "totalComision": totalComision,
+        "montoTotal": totalPagar,
+        "pago": true,
+        "fechaEntrega": fecha,
+        "horaEntrega": hora
+    }
+    
+    }).then(res=>{
+        console.log(res.data);
+    }).catch(error=>{
+        console.error(error);
+    });
+
+}
+function retroceder(){
+    if (retroceso == 'registro') {
+        document.getElementById('contenido').style.display= "block";
+        document.getElementById('retroceder').style.display = "none";
+        document.getElementById('contenidoRegistrar').style.display= "none";
+        document.getElementById('contenidoRegistrar2').style.display= "none";
+        document.getElementById('btnRegistro').style.display= "block";
+        document.getElementById('cuerpo').className='cuerpo-general fondo1';
+        document.getElementById('barraNav').className='navbar navbar-light  barra barra-general';
+    }
+    if (retroceso == 'ordenesSinTomar' || retroceso == 'ordenesTomadas' || retroceso == 'ordenesEntregadas') {
+        ordenes(repartidorActual);
+        document.getElementById('retroceder').style.display = "none";
+    }
 }
 
 
